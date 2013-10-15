@@ -68,7 +68,7 @@ typedef void (^YMSCBPeripheralDiscoverServicesBlockType)(NSArray *, NSError *);
  
  The NSString `key` is typically a "human-readable" string to easily reference a YMSCBService.
  */
-@property (nonatomic, strong) NSDictionary *serviceDict;
+@property (nonatomic, strong) NSMutableDictionary *serviceDict;
 
 /// The CBPeripheral instance.
 @property (nonatomic, strong) CBPeripheral *cbPeripheral;
@@ -117,6 +117,7 @@ typedef void (^YMSCBPeripheralDiscoverServicesBlockType)(NSArray *, NSError *);
 @property (nonatomic, assign) BOOL isRenderedInViewCell;
            
 
+- (void)addServices:(NSArray *)services;
 
 /** @name Initializing a YMSCBPeripheral */
 /**

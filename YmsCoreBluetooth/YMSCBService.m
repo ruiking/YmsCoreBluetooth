@@ -27,6 +27,19 @@
 
 @implementation YMSCBService
 
+- (instancetype)initWithName:(NSString *)oName
+                      parent:(YMSCBPeripheral *)pObj
+                   cbservice:(CBService *)cbservice {
+    
+    self = [super init];
+    if (self) {
+        _name = oName;
+        _parent = pObj;
+        _characteristicDict = [[NSMutableDictionary alloc] init];
+        _uuid = cbservice.UUID;
+    }
+    return self;
+}
 
 - (instancetype)initWithName:(NSString *)oName
                       parent:(YMSCBPeripheral *)pObj

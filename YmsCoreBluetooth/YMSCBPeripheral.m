@@ -28,6 +28,19 @@
 
 @implementation YMSCBPeripheral
 
+- (void)addServices:(NSArray *)services {
+    if (!self.serviceDict) {
+        self.serviceDict = [[NSMutableDictionary alloc] initWithCapacity:1];
+    }
+    
+    for (CBService *cbservice in services) {
+        YMSCBService *theService = [[YMSCBService alloc] initWithName:cbservice.UUID.description
+                                                               parent:self
+                                                            cbservice:cbservice];
+        [self.serviceDict setObject:theService forKey:cbservice.UUID.description];
+    }
+}
+
 - (instancetype)initWithPeripheral:(CBPeripheral *)peripheral
                            central:(YMSCBCentralManager *)owner
                             baseHi:(int64_t)hi
