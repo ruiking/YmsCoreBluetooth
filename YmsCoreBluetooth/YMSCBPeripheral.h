@@ -117,8 +117,6 @@ typedef void (^YMSCBPeripheralDiscoverServicesBlockType)(NSArray *, NSError *);
 @property (nonatomic, assign) BOOL isRenderedInViewCell;
            
 
-- (void)addServices:(NSArray *)services;
-
 /** @name Initializing a YMSCBPeripheral */
 /**
  Constructor.

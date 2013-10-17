@@ -28,15 +28,6 @@
 
 @implementation YMSCBPeripheral
 
-- (void)addServices:(NSArray *)services {
-    if (!self.serviceDict) {
-        self.serviceDict = [[NSMutableDictionary alloc] initWithCapacity:1];
-    }
-    
-    for (YMSCBService *theService in services) {
-        [self.serviceDict setObject:theService forKey:theService.cbService.UUID.description];
-    }
-}
 
 - (instancetype)initWithPeripheral:(CBPeripheral *)peripheral
                            central:(YMSCBCentralManager *)owner
@@ -266,6 +257,10 @@
         if (this.discoverServicesCallback) {
             NSMutableArray *services = [NSMutableArray new];
             
+            if (!this.serviceDict) {
+                this.serviceDict = [[NSMutableDictionary alloc] initWithCapacity:1];
+            }
+            
             // TODO: add method syncServices
             
             @synchronized(self) {
@@ -273,21 +268,18 @@
                     YMSCBService *btService = [this findService:service];
                     if (btService) {
                         btService.cbService = service;
-                        [services addObject:btService];
                     }else {
                         btService = [[YMSCBService alloc] initWithName:service.UUID.description
                                                                 parent:self
                                                              cbservice:service];
                         btService.cbService = service;
-                        [services addObject:btService];
                     }
+                    [services addObject:btService];
+                    
+                    [this.serviceDict setObject:btService forKey:btService.cbService.UUID.description];
+                    
                 }
             }
-            
-            [this addServices:services];
-            
-            NSLog(@"this.services: %@", this.services);
-            NSLog(@"services: %@",services);
             
             this.discoverServicesCallback(services, error);
             this.discoverServicesCallback = nil;
