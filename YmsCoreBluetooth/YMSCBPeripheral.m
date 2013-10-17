@@ -120,7 +120,7 @@
 }
 
 - (YMSCBService *)findService:(CBService *)service {
-    YMSCBService *result;
+    YMSCBService *result = nil;
     
     for (NSString *key in self.serviceDict) {
         YMSCBService *btService = self.serviceDict[key];
@@ -274,6 +274,11 @@
                     YMSCBService *btService = [this findService:service];
                     if (btService) {
                         btService.cbService = service;
+                        [services addObject:btService];
+                    }else {
+                        btService = [[YMSCBService alloc] initWithName:service.UUID.description
+                                                                parent:self
+                                                             cbservice:service];
                         [services addObject:btService];
                     }
                 }

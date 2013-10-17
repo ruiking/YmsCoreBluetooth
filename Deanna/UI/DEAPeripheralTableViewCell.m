@@ -73,7 +73,7 @@
     }
 
     
-    if ([self.yperipheral isKindOfClass:[DEASensorTag class]]) {
+    if (YES || [self.yperipheral isKindOfClass:[DEASensorTag class]]) {
         self.peripheralIcon.image = [UIImage imageNamed:@"iconSensorTag"];
         
         if (self.yperipheral.isConnected) {
