@@ -33,11 +33,8 @@
         self.serviceDict = [[NSMutableDictionary alloc] initWithCapacity:1];
     }
     
-    for (CBService *cbservice in services) {
-        YMSCBService *theService = [[YMSCBService alloc] initWithName:cbservice.UUID.description
-                                                               parent:self
-                                                            cbservice:cbservice];
-        [self.serviceDict setObject:theService forKey:cbservice.UUID.description];
+    for (YMSCBService *theService in services) {
+        [self.serviceDict setObject:theService forKey:theService.cbService.UUID.description];
     }
 }
 
@@ -262,8 +259,10 @@
  */
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error {
     __weak YMSCBPeripheral *this = self;
-    _YMS_PERFORM_ON_MAIN_THREAD(^{
-        
+//    _YMS_PERFORM_ON_MAIN_THREAD(^{
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+    
         if (this.discoverServicesCallback) {
             NSMutableArray *services = [NSMutableArray new];
             
@@ -279,10 +278,16 @@
                         btService = [[YMSCBService alloc] initWithName:service.UUID.description
                                                                 parent:self
                                                              cbservice:service];
+                        btService.cbService = service;
                         [services addObject:btService];
                     }
                 }
             }
+            
+            [this addServices:services];
+            
+            NSLog(@"this.services: %@", this.services);
+            NSLog(@"services: %@",services);
             
             this.discoverServicesCallback(services, error);
             this.discoverServicesCallback = nil;
