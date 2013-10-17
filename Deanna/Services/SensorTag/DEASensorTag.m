@@ -50,14 +50,15 @@
         DEAMagnetometerService *ms = [[DEAMagnetometerService alloc] initWithName:@"magnetometer" parent:self baseHi:hi baseLo:lo serviceOffset:kSensorTag_MAGNETOMETER_SERVICE];
         DEADeviceInfoService *ds = [[DEADeviceInfoService alloc] initWithName:@"devinfo" parent:self baseHi:0 baseLo:0 serviceOffset:kSensorTag_DEVINFO_SERV_UUID];
         
-        self.serviceDict = @{@"temperature": ts,
-                             @"accelerometer": as,
-                             @"simplekeys": sks,
-                             @"humidity": hs,
-                             @"magnetometer": ms,
-                             @"gyroscope": gs,
-                             @"barometer": bs,
-                             @"devinfo": ds};
+        self.serviceDict = [[NSMutableDictionary alloc]initWithDictionary:
+                            @{@"temperature": ts,
+                              @"accelerometer": as,
+                              @"simplekeys": sks,
+                              @"humidity": hs,
+                              @"magnetometer": ms,
+                              @"gyroscope": gs,
+                              @"barometer": bs,
+                              @"devinfo": ds}];
     }
     return self;
 
