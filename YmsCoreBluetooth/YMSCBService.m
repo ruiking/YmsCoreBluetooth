@@ -136,6 +136,16 @@
 
 - (void)syncCharacteristics:(NSArray *)foundCharacteristics {
     @synchronized(self) {
+        if ([self.characteristicDict count] == 0) {
+            for (CBCharacteristic *rkC in foundCharacteristics) {
+                YMSCBCharacteristic *yc = [[YMSCBCharacteristic alloc] initWithName:rkC.UUID.description parent:self.parent uuid:rkC.UUID offset:0];
+                NSString *theKey = rkC.UUID.description?rkC.UUID.description:@"theCharacteristic";
+//                [self.characteristicDict setObject:yc forKey:theKey];
+                self.characteristicDict[theKey] = yc;
+            }
+            
+        }
+        
         for (NSString *key in self.characteristicDict) {
             YMSCBCharacteristic *yc = self.characteristicDict[key];
             for (CBCharacteristic *ct in foundCharacteristics) {

@@ -107,6 +107,21 @@
     
 }
 
+- (YMSCBService *)findServiceWithUUID:(CBUUID *)uuid {
+    YMSCBService *result = nil;
+    
+    for (NSString *key in self.serviceDict) {
+        YMSCBService *btService = self.serviceDict[key];
+        
+        if ([uuid isEqual:btService.uuid]) {
+            result = btService;
+            break;
+        }
+        
+    }
+    return result;
+}
+
 - (YMSCBService *)findService:(CBService *)service {
     YMSCBService *result = nil;
     
@@ -250,9 +265,9 @@
  */
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverServices:(NSError *)error {
     __weak YMSCBPeripheral *this = self;
-//    _YMS_PERFORM_ON_MAIN_THREAD(^{
+    _YMS_PERFORM_ON_MAIN_THREAD(^{
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+//    dispatch_async(dispatch_get_main_queue(), ^{
     
         if (this.discoverServicesCallback) {
             NSMutableArray *services = [NSMutableArray new];
@@ -317,7 +332,8 @@
  */
 - (void)peripheral:(CBPeripheral *)peripheral didDiscoverCharacteristicsForService:(CBService *)service error:(NSError *)error {
     __weak YMSCBPeripheral *this = self;
-    _YMS_PERFORM_ON_MAIN_THREAD(^{
+//    _YMS_PERFORM_ON_MAIN_THREAD(^{
+    dispatch_async(dispatch_get_main_queue(), ^{
         YMSCBService *btService = [this findService:service];
         
         [btService syncCharacteristics:service.characteristics];

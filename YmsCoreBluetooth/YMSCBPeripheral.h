@@ -160,6 +160,14 @@ typedef void (^YMSCBPeripheralDiscoverServicesBlockType)(NSArray *, NSError *);
  */
 - (NSArray *)servicesSubset:(NSArray *)keys;
 
+/** @name Find a YMSCBService */
+/**
+ Find YMSCBService given its corresponding CBUUID.
+ 
+ @param service CBService to search for in serviceDict.
+ @return YMSCBService instance which holds *service*.
+ */
+- (YMSCBService *)findServiceWithUUID:(CBUUID *)uuid;
 
 /** @name Find a YMSCBService */
 /**
