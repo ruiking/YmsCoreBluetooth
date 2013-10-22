@@ -151,6 +151,15 @@ typedef NS_ENUM(NSInteger, YMSCBCallbackTransactionType) {
 
 /** @name Find a YMSCBCharacteristic */
 /**
+ Find a individual CBCharacteristic with UUID.
+ 
+ @param uuid CBUUID
+ @return instance of ct
+ */
+- (YMSCBCharacteristic *)findCharacteristicWithUUID:(CBUUID *)uuid;
+
+/** @name Find a YMSCBCharacteristic */
+/**
  Find characteristic container for CBCharacteristic.
  
  @param ct CBCharacteristic 

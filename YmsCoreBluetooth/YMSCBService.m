@@ -164,6 +164,19 @@
     
 }
 
+- (YMSCBCharacteristic *)findCharacteristicWithUUID:(CBUUID *)uuid {
+    YMSCBCharacteristic *result;
+    for (NSString *key in self.characteristicDict) {
+        YMSCBCharacteristic *yc = self.characteristicDict[key];
+        
+        if ([uuid isEqual:yc.uuid]) {
+            result = yc;
+            break;
+        }
+    }
+    return result;
+}
+
 
 - (YMSCBCharacteristic *)findCharacteristic:(CBCharacteristic *)ct {
     YMSCBCharacteristic *result;
