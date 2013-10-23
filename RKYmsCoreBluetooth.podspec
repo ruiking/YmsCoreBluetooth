@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
                     This is a ruiking customized version of YmsCoreBluetooth.
                    DESC
 
-  s.license      = 'Apache License, Version 2.0', :file => 'LICENSE-2.0.txt' }
+  s.license      = { :type => 'Apache License, Version 2.0', :file => 'LICENSE-2.0.txt' }
   s.homepage     = "http://www.lapsule.com"
   s.author       = { "Jun Du" => "dujun@ruiking.com" }
   s.platform     = :ios, '6.0'
