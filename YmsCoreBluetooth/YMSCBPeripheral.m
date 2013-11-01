@@ -192,11 +192,7 @@
 }
 
 - (void)resetWatchdog {
-    if (self.watchdogTimer) {
-        [self.watchdogTimer invalidate];
-        self.watchdogTimer = nil;
-        self.watchdogRaised = NO;
-    }
+    [self invalidateWatchdog];
 
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:self.watchdogTimerInterval
                                                       target:self
@@ -206,6 +202,13 @@
     self.watchdogTimer = timer;
 }
 
+- (void)invalidateWatchdog {
+    if (self.watchdogTimer) {
+        [self.watchdogTimer invalidate];
+        self.watchdogTimer = nil;
+        self.watchdogRaised = NO;
+    }
+}
 
 - (void)watchdogDisconnect {
     // Watchdog aware method
@@ -232,6 +235,8 @@
 
 - (void)handleConnectionResponse:(NSError *)error {
     YMSCBPeripheralConnectCallbackBlockType callback = [self.connectCallback copy];
+    
+    [self invalidateWatchdog];
     
     if (callback) {
         callback(self, error);
